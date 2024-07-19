@@ -4,7 +4,144 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Google</title>
+  <style><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Google</title>
   <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+    }
+
+    .video-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+    }
+
+    .content2 {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      z-index: 1;
+    }
+
+    .search-container {
+      position: relative; /* This makes the search-box and suggestions positioned relative to this container */
+      margin-top: 10%;
+      text-align: center;
+    }
+
+    .search-box {
+      width: 300px;
+      padding: 10px;
+      border-radius: 20px;
+      border: 2px solid rgba(255, 255, 255, 0.7);
+      background: rgba(0, 0, 0, 0.5);
+      color: white;
+      font-size: 1em;
+      position: relative; /* This allows the suggestions to be positioned relative to this element */
+    }
+
+    .search-box:focus {
+      outline: none;
+      border-color: white;
+      background: rgba(0, 0, 0, 0.7);
+    }
+
+    .suggestions {
+      position: absolute;
+      top: 100%; /* This places the suggestions directly below the search-box */
+      left: 0;
+      width: 100%; /* Make sure the width of suggestions matches the width of the search-box */
+      background: rgba(0, 0, 0, 0.7);
+      border-radius: 10px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
+      display: none;
+      z-index: 2;
+    }
+
+    .suggestions div {
+      padding: 10px;
+      color: white;
+      cursor: pointer;
+    }
+
+    .suggestions div:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+  </style>
+</head>
+<body>
+  <video class="video-background" autoplay muted loop>
+    <source src="videoplayback.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+
+  <div class="content2">
+    <div class="search-container">
+      <input type="text" id="searchBox" placeholder="Search Here" class="search-box">
+      <div id="suggestions" class="suggestions"></div>
+    </div>
+  </div>
+
+  <script>
+    const suggestionsData = [
+      { name: "Facebook", url: "https://www.facebook.com" },
+      { name: "Instagram", url: "https://www.instagram.com" },
+      { name: "YouTube", url: "https://www.youtube.com" },
+      { name: "Canva", url: "https://www.canva.com" },
+      { name: "ChatGPT", url: "https://chatgpt.com" },
+      { name: "TikTok", url: "https://tiktok.com" },
+    ];
+
+    const searchBox = document.getElementById('searchBox');
+    const suggestions = document.getElementById('suggestions');
+
+    function showSuggestions() {
+      suggestions.innerHTML = '';
+      const filteredSuggestions = suggestionsData;
+
+      filteredSuggestions.forEach(suggestion => {
+        const div = document.createElement('div');
+        div.textContent = suggestion.name;
+        div.addEventListener('click', () => {
+          window.location.href = suggestion.url;
+        });
+        suggestions.appendChild(div);
+      });
+
+      suggestions.style.display = 'block';
+    }
+
+    searchBox.addEventListener('click', () => {
+      showSuggestions();
+    });
+
+    document.addEventListener('click', (event) => {
+      if (!searchBox.contains(event.target) && !suggestions.contains(event.target)) {
+        suggestions.style.display = 'none';
+      }
+    });
+  </script>
+</body>
+</html>
+
     body, html {
       margin: 0;
       padding: 0;
